@@ -23,6 +23,14 @@ code {
   align-items: center;
   justify-content: center;
 }
+.Card:first-child{margin-top: 0}
+.Card:last-child{margin-bottom: 0}
 
 .drag-start{
   background: #e2e1e1;}
+
+.List{
+  border:1px solid #cecdcd;
+  padding: 10px;
+  display: inline-block;
+}

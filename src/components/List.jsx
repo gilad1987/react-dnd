@@ -1,28 +1,19 @@
 import React, {Component} from 'react';
-import './App.css';
-import Card from "./components/Card";
-import {observable, action, decorate} from "mobx";
+import Card from './Card';
+import {observable, decorate} from "mobx";
 import {observer} from "mobx-react";
 
-class App extends React.Component {
+class List extends Component {
 
-    cards = [1,2,3,4,5,6,7,8,9];
-
+    cards = null;
 
     constructor(props) {
         super(props);
         this.draggState = {};
+        this.cards = this.props.cards;
     }
 
-    getCards = () => {
-        return this.cards;
-    }
-
-    componentDidMount() {
-        console.log('componentDidMount')
-    }
-
-    onDragg = (eventName, item) => {
+    reOrderItem = (eventName, item, itemIndex) => {
         if (this.draggState[eventName] === item) {
             return;
         }
@@ -34,30 +25,31 @@ class App extends React.Component {
             const dragStartItemIndex = this.cards.indexOf(dragStartItem);
             const dragEnterItem = this.draggState.handleDragEnter;
             const dragEnterItemIndex = this.cards.indexOf(dragEnterItem);
+
+            if (dragStartItem === dragEnterItem) {
+                return;
+            }
+
             let newCardsOrder = this.cards.slice();
             newCardsOrder.splice(dragStartItemIndex, 1);
-            newCardsOrder.splice(Math.max(0, dragEnterItemIndex - 1), 0, dragStartItem);
+            newCardsOrder.splice(Math.max(0, dragEnterItemIndex), 0, dragStartItem);
             this.cards = newCardsOrder;
         }
     };
 
-
     render() {
-        console.log('app render');
-        const cards = this.cards.map(item => (<Card key={item} item={item} onDragg={this.onDragg}/>));
-
+        const cards = this.cards.map((item, index) => (
+            <Card key={item.id} item={item} index={index} onDragg={this.reOrderItem}/>));
         return (
-            <div className="App">
+            <div className="List">
                 {cards}
             </div>
         );
     }
 }
 
-decorate(App, {
+decorate(List, {
     cards: observable,
-    onDragg: action,
-    componentDidMount: action,
 });
 
-export default observer(App);
+export default observer(List);

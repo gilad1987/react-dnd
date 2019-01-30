@@ -12,23 +12,23 @@ export default class Draggable extends Component {
     }
 
     handleDragStart = (e) => {
-        this.props.onDragg('handleDragStart', this.props.item);
+        this.props.onDragg('handleDragStart', this.props.item, this.props.index);
         this.ref.classList.add('drag-start');
     };
     handleDragEnter = (e) => {
-        this.props.onDragg('handleDragEnter', this.props.item);
+        this.props.onDragg('handleDragEnter', this.props.item, this.props.index);
     };
     handleDragOver = (e) => {
-        this.props.onDragg('handleDragOver', this.props.item);
+        this.props.onDragg('handleDragOver', this.props.item, this.props.index);
     };
     handleDragLeave = (e) => {
-        this.props.onDragg('handleDragLeave', this.props.item);
+        this.props.onDragg('handleDragLeave', this.props.item, this.props.index);
     };
     handleDrop = (e) => {
-        this.props.onDragg('handleDrop', this.props.item);
+        this.props.onDragg('handleDrop', this.props.item, this.props.index);
     };
     handleDragEnd = (e) => {
-        this.props.onDragg('handleDragEnd', this.props.item);
-        setTimeout(()=>this.ref.classList.remove('drag-start'),750);
+        this.props.onDragg('handleDragEnd', this.props.item, this.props.index);
+        setTimeout(() => this.ref.classList.remove('drag-start'), 750);
     };
 }
