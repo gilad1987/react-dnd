@@ -1,19 +1,24 @@
 import React from 'react';
 import Draggable from "../dragable.abstract";
+import classnames from 'classnames';
 
 class Card extends Draggable {
     render() {
+        const {item} = this.props;
+        const className = classnames('Card', { isDragged: item.isDragged });
         return (
             <div
-                className={'Card'}
-                draggable="true"
+                className={className}
+                draggable
                 ref={ref => this.ref = ref}
-                // style={{height: `${this.props.item.height}px`}}
+                style={{height: `${item.height}px`}}
             >
-                {this.props.item.placeholder ? 'placeholder' : this.props.item.id}
+                <div draggable="false">
+                    {item.isDragged ? null : item.id}
+                </div>
             </div>
         );
     }
 }
-
 export default Card;
+
