@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import Card from './Card';
 import {observer} from "mobx-react";
+import Draggable from "../dragable.abstract";
+import classnames from "classnames";
 
 class List extends Component {
 
@@ -52,6 +54,8 @@ class List extends Component {
     };
 
     render() {
+        const className = classnames('List', {isDragged: this.props.item.isDragged});
+
         const cards = this.props.cards.map((item, index) => (
             <Card
                 key={item.id}
@@ -61,13 +65,13 @@ class List extends Component {
             />
         ));
         return (
-            <div className="List" draggable>
-                {cards}
+            <div className={className} draggable ref={ref => this.ref = ref}>
+                <div className="List-title">List number: {this.props.number}</div>
+                {this.props.item.isDragged ? cards : cards}
             </div>
         );
     }
 }
-
 
 
 export default observer(List);

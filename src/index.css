@@ -13,7 +13,7 @@ code {
     monospace;
 }
 
-.App{
+.App {
     display: flex;
 }
 
@@ -46,16 +46,41 @@ code {
 
 .List {
     border: 1px solid #cecdcd;
-    padding: 50px 10px 10px;
+    padding: 10px;
     background: white;
     margin: 0 20px;
+    position: relative;
+}
+.List.isDragged{
+    background: green;
 }
 
+.List-title {
+    margin: 0;
+    font-size: 18px;
+    padding: 15px 0;
+    background: #f4f4f4;
+}
 
 .dragging {
     position: absolute;
     transform: rotate(3deg);
     z-index: 6;
     box-shadow: -1px 3px 12px 0px #c6c6c6;
+}
+
+.placeholder{
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background: #eaeaea;
+    z-index: 6;
+}
+.isDragged .placeholder {
+    display: block;
+
 }
 

@@ -8,11 +8,11 @@ export default class Draggable extends Component {
     clientX = 0;
     clientY = 0;
 
-    componentDidMount() {
+    componentDidMount = () => {
         this.attachEvents(this.ref);
     }
 
-    attachEvents(element){
+    attachEvents = (element) => {
         element.addEventListener('dragstart', this.handleDragStart, false);
         element.addEventListener('dragenter', this.handleDragEnter, false);
         element.addEventListener('dragover', this.handleDragOver, false);
@@ -23,36 +23,43 @@ export default class Draggable extends Component {
     }
 
     handleDragStart = (event) => {
+
         const clone = event.target.cloneNode(true);
         const dragImage = document.createElement('div');
         this.clone = dragImage;
         clone.classList.add("dragging");
-        // clone.style.width = event.target.offsetWidth;
-        // clone.style.height = event.target.offsetHeight;
+        this.offsetX = event.offsetX;
+        this.offsetY = event.offsetY;
+        clone.style.width = event.target.offsetWidth + 'px';
+
+        clone.style.height = event.target.offsetHeight + 'px';
         event.dataTransfer.effectAllowed = 'move';
         dragImage.appendChild(clone);
-        dragImage.setAttribute('style', `position: absolute; left: ${-1000}px; top: ${-1000}px; width:350px; background: red; z-index: -1`);
+        dragImage.setAttribute('style', `position: absolute; left: ${-1000}px; top: ${-1000}px;`);
         document.body.appendChild(dragImage);
-        event.dataTransfer.setDragImage(dragImage, event.offsetX, event.offsetY);
+        // document.body.appendChild(clone);
+        event.dataTransfer.setDragImage(dragImage, this.offsetX, this.offsetY);
+
 
         this.props.onDrag('handleDragStart', this.props.item, this.props.index);
     };
-    handleDragEnter = (e) => {
+    handleDragEnter = (event) => {
+
         this.props.onDrag('handleDragEnter', this.props.item, this.props.index);
     };
-    handleDragOver = (e) => {
+    handleDragOver = (event) => {
         this.props.onDrag('handleDragOver', this.props.item, this.props.index);
     };
-    handleDragLeave = (e) => {
+    handleDragLeave = (event) => {
         this.props.onDrag('handleDragLeave', this.props.item, this.props.index);
     };
-    handleDrop = (e) => {
+    handleDrop = (event) => {
         this.props.onDrag('handleDrop', this.props.item, this.props.index);
     };
-    handleDragEnd = (e) => {
+    handleDragEnd = (event) => {
         if (this.clone) {
-            // this.clone.remove();
-            // this.clone = null;
+            this.clone.remove();
+            this.clone = null;
         }
         this.props.onDrag('handleDragEnd', this.props.item, this.props.index);
     };

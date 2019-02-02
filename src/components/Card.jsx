@@ -5,7 +5,7 @@ import classnames from 'classnames';
 class Card extends Draggable {
     render() {
         const {item} = this.props;
-        const className = classnames('Card', { isDragged: item.isDragged });
+        const className = classnames('Card', {isDragged: item.isDragged});
         return (
             <div
                 className={className}
@@ -13,12 +13,11 @@ class Card extends Draggable {
                 ref={ref => this.ref = ref}
                 style={{height: `${item.height}px`}}
             >
-                <div draggable="false">
-                    {item.isDragged ? null : item.id}
-                </div>
+                {item.isDragged ? null : item.id}
             </div>
         );
     }
 }
+
 export default Card;
 
